@@ -1,9 +1,15 @@
 from flask import Flask
+from prometheus_client import Counter
+from prometheus_client import generate_latest
+from prometheus_client import CONTENT_TYPE_LATEST
 import random
 import os
 import time
 
 app = Flask(__name__)
+
+payment_requests_total = Counter('payment_requests_total', 'Total payment requests')
+
 
 @app.route("/")
 def health():
@@ -14,7 +20,7 @@ def health():
 
 @app.route("/payment")
 def payment():
-
+    payment_requests_total.inc()
     if random.randint(1,10) > 7:
         return {
             "status":"failed"
@@ -22,6 +28,12 @@ def payment():
 
     return {
         "status":"success"
+    }
+
+@app.route("/metrics")
+def metrics():
+    return generate_latest(), 200, {
+        'Content-Type' : CONTENT_TYPE_LATEST
     }
 
 @app.route("/slow-payment")

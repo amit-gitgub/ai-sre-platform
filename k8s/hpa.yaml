@@ -20,7 +20,7 @@ spec:
   maxReplicas: 5
 
   metrics:
-
+ 
   - type: Resource
 
     resource:
