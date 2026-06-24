@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: payment-api
+  namespace: ai-sre
+
+spec:
+
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: payment-api
+
+  template:
+
+    metadata:
+      labels:
+        app: payment-api
+
+    spec:
+
+      containers:
+
+      - name: payment-api
+
+        image: 988992884224.dkr.ecr.us-west-1.amazonaws.com/payment-api:v2
+
+        ports:
+        - containerPort: 5000
+
+        resources:
+
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
