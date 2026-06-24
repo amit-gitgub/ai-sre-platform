@@ -31,6 +31,12 @@ def slow_payment():
         "status": "success"
     }
 
+@app.route("/cpu")
+def cpu():
+    result = 0
+    for i in range(1000000):
+        result +=i
+    return{"ststus" : "done"}
 
 if __name__ == "__main__":
     app.run(
