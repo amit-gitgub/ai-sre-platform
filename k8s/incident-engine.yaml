@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: incident-engine
+  namespace: ai-sre
+
+spec:
+
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: incident-engine
+
+  template:
+
+    metadata:
+      labels:
+        app: incident-engine
+
+    spec:
+
+      containers:
+
+      - name: incident-engine
+
+        image: 988992884224.dkr.ecr.us-west-1.amazonaws.com/incident-engine:v1
+
+        ports:
+        - containerPort: 5001
+
+        resources:
+
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
