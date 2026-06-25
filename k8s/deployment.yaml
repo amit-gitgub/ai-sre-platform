@@ -25,7 +25,7 @@ spec:
 
       - name: payment-api
 
-        image: 988992884224.dkr.ecr.us-west-1.amazonaws.com/payment-api:v3
+        image: 988992884224.dkr.ecr.us-west-1.amazonaws.com/payment-api:v5
 
         ports:
         - containerPort: 5000

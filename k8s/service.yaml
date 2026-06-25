@@ -4,16 +4,16 @@ kind: Service
 metadata:
   name: payment-api
   namespace: ai-sre
+  labels:
+    app: payment-api
 
 spec:
-
   selector:
     app: payment-api
 
   ports:
-
-  - port: 80
-
+  - name: http
+    port: 80
     targetPort: 5000
 
   type: LoadBalancer
