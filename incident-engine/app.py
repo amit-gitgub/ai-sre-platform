@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from kubernetes import client, config
-
+from rca_engine import analyse_incident
 import json, os, uuid
 
 
@@ -26,7 +26,9 @@ def alerts():
         pod_log = v1.read_namespaced_pod_log(
             name=pod_name,
             namespace="ai-sre",
-            tail_lines = 20
+            tail_lines = 20,
+            pretty = True
+            
         )
         pods_logs[pod_name] = pod_log
     print(data)
@@ -39,9 +41,14 @@ def alerts():
         "logs": pods_logs
 
     }
+
+    rca_result= analyse_incident(incident)
+    incident["rca"] = rca_result
+    
+
     #print(incident)
     os.makedirs(
-        "incidents",
+        name="incidents",
         exist_ok=True
     )
     file_name = f"incidents/{incident_id}.json"
@@ -62,6 +69,8 @@ def alerts():
          "incident_id": incident_id}
 
     )
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001)
