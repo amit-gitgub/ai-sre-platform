@@ -14,6 +14,16 @@ pipeline {
 
         }
 
+        stage('workspace'){
+            steps {
+                sh '''
+                pwd
+                ls -ltr
+
+                '''
+            }
+        }
+
     }
 
 }
